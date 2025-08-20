@@ -38,19 +38,16 @@ public class Acumuladores {
 	 * @return
 	 */
 	public boolean hayInterseccionPorFila(int[][] mat1, int[][] mat2) {
-		if (mat1 == null || mat2 == null || mat1.length == 0 || mat2.length == 0 || mat1.length != mat2.length) {
+		if (mat1 == null || mat2 == null || mat1.length == 0 || mat2.length == 0 || mat1.length != mat2.length)
 			return false;
-		}
+
 		boolean interseccionEnTodas = true;
 		for (int i = 0; i < mat2.length; i++) {
 			boolean interccionFila = false;
 			for (int j = 0; j < mat1[0].length; j++) {
 				interccionFila = interccionFila || hayInterseccionEnFila(mat1[i][j], mat2[i]);
 			}
-			System.out.println(" interccionFila " + interccionFila);
 			interseccionEnTodas = interseccionEnTodas && interccionFila;
-			System.out.println(" interseccionEnTodas " + interseccionEnTodas);
-
 		}
 
 		return interseccionEnTodas;
@@ -77,7 +74,37 @@ public class Acumuladores {
 	 * @return
 	 */
 	public boolean algunaFilaSumaMasQueLaColumna(int[][] mat, int nColum) {
-		throw new RuntimeException("Metodo no implementado aun!!!");
+		if (mat.length == 0 || mat.length < nColum || 0 > nColum) {
+			return false;
+		}
+
+		int sumaColumnasTotal = sumaDeColumnas(mat, nColum);
+		boolean mayorATodos = true;
+
+		for (int i = 0; i < mat.length; i++) {
+			System.out.println(
+					"sumaColumnasTotal = " + sumaColumnasTotal + " sumaFila(mat[" + i + "])" + sumaFila(mat[i]));
+			mayorATodos = mayorATodos && sumaColumnasTotal < sumaFila(mat[i]);
+			System.out.println(mayorATodos);
+		}
+		return mayorATodos;
+	}
+
+	private int sumaDeColumnas(int[][] mat, int nColum) {
+		int sumaTotal = 0;
+		System.out.println(mat.length + " " + mat[0].length + " " + mat[0][0] + " " + nColum);
+		for (int j = 0; j < mat.length; j++) {
+			sumaTotal += mat[j][nColum];
+		}
+		return sumaTotal;
+	}
+
+	private int sumaFila(int[] mat) {
+		int sumaTotal = 0;
+		for (int i = 0; i < mat.length; i++) {
+			sumaTotal += mat[i];
+		}
+		return sumaTotal;
 	}
 
 	/**
