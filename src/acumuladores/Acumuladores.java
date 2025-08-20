@@ -1,5 +1,7 @@
 package acumuladores;
 
+import java.util.Arrays;
+
 public class Acumuladores {
 
 	/**
@@ -82,17 +84,13 @@ public class Acumuladores {
 		boolean mayorATodos = true;
 
 		for (int i = 0; i < mat.length; i++) {
-			System.out.println(
-					"sumaColumnasTotal = " + sumaColumnasTotal + " sumaFila(mat[" + i + "])" + sumaFila(mat[i]));
 			mayorATodos = mayorATodos && sumaColumnasTotal < sumaFila(mat[i]);
-			System.out.println(mayorATodos);
 		}
 		return mayorATodos;
 	}
 
 	private int sumaDeColumnas(int[][] mat, int nColum) {
 		int sumaTotal = 0;
-		System.out.println(mat.length + " " + mat[0].length + " " + mat[0][0] + " " + nColum);
 		for (int j = 0; j < mat.length; j++) {
 			sumaTotal += mat[j][nColum];
 		}
@@ -119,6 +117,34 @@ public class Acumuladores {
 	 * @return
 	 */
 	public boolean hayInterseccionPorColumna(int[][] mat1, int[][] mat2) {
-		throw new RuntimeException("Metodo no implementado aun!!!");
+		if (mat1.length == 0 || mat2.length == 0 || mat1[0].length != mat2[0].length)
+			return false;
+		boolean columnasTodasConInterseccion = true;
+		for (int i = 0; i < mat1[0].length; i++) {
+			int[] arregloMat1 = arregloDeColumna(mat1, i);
+			int[] arregloMat2 = arregloDeColumna(mat2, i);
+			columnasTodasConInterseccion = columnasTodasConInterseccion
+					&& buscarInterserccion(arregloMat1, arregloMat2);
+		}
+
+		return columnasTodasConInterseccion;
+	}
+
+	private boolean buscarInterserccion(int[] mat1, int[] mat2) {
+		boolean columnaConInterseccion = false;
+		for (int i = 0; i < mat1.length; i++) {
+			for (int j = 0; j < mat2.length; j++) {
+				columnaConInterseccion = columnaConInterseccion || mat1[i] == mat2[j];
+			}
+		}
+		return columnaConInterseccion;
+	}
+
+	private int[] arregloDeColumna(int[][] mat, int i) {
+		int[] arregloColumna = new int[mat.length];
+		for (int j = 0; j < mat.length; j++) {
+			arregloColumna[j] = mat[j][i];
+		}
+		return arregloColumna;
 	}
 }
